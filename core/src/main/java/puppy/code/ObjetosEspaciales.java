@@ -9,6 +9,8 @@ public abstract class ObjetosEspaciales {
     protected Sprite spr;
     protected float Vel_x; 
     protected float Vel_y; 
+    private EstrategiaMovimiento estrategiaMovimiento;
+    
 
     // Constructor que permite inicializar la textura y la posición del objeto
     public ObjetosEspaciales(Texture texture, int x, int y) {
@@ -17,9 +19,15 @@ public abstract class ObjetosEspaciales {
         // Opcional: se puede ajustar el tamaño según sea necesario
         this.spr.setBounds(x, y, texture.getWidth(), texture.getHeight());
     }
-
+    public void setEstrategiaMovimiento(EstrategiaMovimiento estrategia) {
+        this.estrategiaMovimiento = estrategia;
+    }
     // Método abstracto que debe ser implementado para mover el objeto
-    public abstract void mover();
+    public void mover() {
+        if (estrategiaMovimiento != null) {
+            estrategiaMovimiento.mover(this);
+        }
+    }
 
     // Método para actualizar la posición del sprite
     public void actualizarPosicion() {

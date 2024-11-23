@@ -60,17 +60,29 @@ public class PantallaJuego extends PantallaBase {
     private ArrayList<Ball2> generarAsteroides() {
         ArrayList<Ball2> asteroides = new ArrayList<>();
         Random r = new Random();
+
         for (int i = 0; i < cantAsteroides; i++) {
-            Ball2 bb = new Ball2(
-                    r.nextInt((int) Gdx.graphics.getWidth()),
-                    50 + r.nextInt((int) Gdx.graphics.getHeight() - 50),
-                    20 + r.nextInt(10), velXAsteroides + r.nextInt(4),
-                    velYAsteroides + r.nextInt(4),
-                    new Texture(Gdx.files.internal("aGreyMedium4.png")));
-            asteroides.add(bb);
+            Ball2 asteroide = new Ball2(
+              r.nextInt((int) Gdx.graphics.getWidth()),
+              r.nextInt((int) Gdx.graphics.getHeight()),
+               20 + r.nextInt(10),
+               velXAsteroides + r.nextInt(4),
+              velYAsteroides + r.nextInt(4),
+              new Texture(Gdx.files.internal("aGreyMedium4.png"))
+            );
+
+            // Asignar diferentes estrategias de movimiento
+            if (i % 2 == 0) {
+                asteroide.setEstrategiaMovimiento(new MovimientoLineal());
+            } else {
+               asteroide.setEstrategiaMovimiento(new MovimientoZigzag());
+            }
+
+            asteroides.add(asteroide);
         }
         return asteroides;
     }
+
 
     @Override
     protected void actualizar(float delta) {

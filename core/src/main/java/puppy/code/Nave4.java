@@ -22,8 +22,14 @@ public class Nave4 extends ObjetosEspaciales implements Colision {
         this.sonidoHerido = soundChoque;
         this.soundBala = soundBala;
         this.txBala = txBala;
+        this.setEstrategiaMovimiento(new MovimientoZigzag()); // Estrategia personalizada
     }
-
+    @Override
+    public void actualizarPosicion() {
+        // Implementa cómo actualizar la posición para esta clase
+        this.getSprite().setX(this.getSprite().getX() + getVel_x());
+        this.getSprite().setY(this.getSprite().getY() + getVel_y());
+    }
     @Override
     public void mover() {
         // Movimiento de la nave

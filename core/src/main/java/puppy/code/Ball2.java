@@ -13,12 +13,18 @@ public class Ball2 extends ObjetosEspaciales implements Colision {
         this.size = size;
         this.Vel_x = xV;
         this.Vel_y = yV;
+        this.setEstrategiaMovimiento(new MovimientoLineal());
         this.isDestroyed = false; // Inicialmente, el meteorito no está destruido
 
         // Control de límites iniciales
         ajustarPosicion(x, y);
     }
-
+    @Override
+    public void actualizarPosicion() {
+        // Implementa cómo actualizar la posición para esta clase
+        this.getSprite().setX(this.getSprite().getX() + getVel_x());
+        this.getSprite().setY(this.getSprite().getY() + getVel_y());
+    }
     private void ajustarPosicion(int x, int y) {
         if (x - size < 0) spr.setX(x + size);
         if (x + size > Gdx.graphics.getWidth()) spr.setX(x - size);
