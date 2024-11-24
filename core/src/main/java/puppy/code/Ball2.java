@@ -35,9 +35,12 @@ public class Ball2 extends ObjetosEspaciales implements Colision {
     @Override
     public void mover() {
         if (!isDestroyed) {
-            update();
-        }
+            if (estrategiaMovimiento != null) {
+                estrategiaMovimiento.mover(this); // Se respeta el patrón Strategy
+            }
+        }   
     }
+
 
     public void update() {
         float velocidadReducida = 0.7f;

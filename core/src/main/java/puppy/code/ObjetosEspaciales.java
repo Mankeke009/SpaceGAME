@@ -9,7 +9,7 @@ public abstract class ObjetosEspaciales {
     protected Sprite spr;
     protected float Vel_x; 
     protected float Vel_y; 
-    private EstrategiaMovimiento estrategiaMovimiento;
+    EstrategiaMovimiento estrategiaMovimiento;
     
 
     // Constructor que permite inicializar la textura y la posición del objeto

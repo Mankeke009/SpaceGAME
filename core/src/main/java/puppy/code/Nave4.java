@@ -93,16 +93,25 @@ public class Nave4 extends ObjetosEspaciales implements Colision {
 
 
     private void dispararBala(PantallaJuego juego) {
-        float angle = spr.getRotation();
-        Bullet bala = new Bullet(
-            spr.getX() + spr.getWidth() / 2 - 5,
-            spr.getY() + spr.getHeight() - 5,
-            angle,
-            txBala
-        );
-        juego.agregarBala(bala);
-        soundBala.play();
+    float angle = spr.getRotation();
+    Bullet bala = new Bullet(
+        spr.getX() + spr.getWidth() / 2 - 5,
+        spr.getY() + spr.getHeight() - 5,
+        angle,
+        txBala
+    );
+
+    // Alternar entre estrategias según una condición
+    if (Math.random() > 0.5) {
+        bala.setEstrategiaMovimiento(new MovimientoLineal());
+    } else {
+        bala.setEstrategiaMovimiento(new MovimientoZigzag());
     }
+
+    juego.agregarBala(bala);
+    soundBala.play();
+}
+
 
     // Implementación de la interfaz Colisionable
     @Override

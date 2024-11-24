@@ -24,6 +24,13 @@ public class PantallaJuego extends PantallaBase {
 
     private Sound explosionSound;
     private Music gameMusic;
+    private String[] texturasNave = {
+        "MainShip1.png",
+        "MainShip2.png",
+        "MainShip3.png",
+        "MainShip4.png"
+    };
+
 
     public PantallaJuego(SpaceNavigation game, int ronda, int vidas, int score, int velXAsteroides, int velYAsteroides) {
         super(game);
@@ -31,14 +38,16 @@ public class PantallaJuego extends PantallaBase {
         this.score = score;
         this.velXAsteroides = velXAsteroides;
         this.velYAsteroides = velYAsteroides;
-
+        
         this.cantAsteroides = calcularCantidadAsteroides(ronda);
 
-        nave = new Nave4(Gdx.graphics.getWidth() / 2 - 50, 30,
-                new Texture(Gdx.files.internal("MainShip3.png")),
+        nave = ObjetosEspacialesFactorySingleton.getInstance()
+        .createNave(Gdx.graphics.getWidth() / 2 - 50, 30,
+                obtenerTexturaNave(ronda), // Textura de la nave según la ronda
+                new Texture(Gdx.files.internal("Rocket2.png")), // Textura de las balas
                 Gdx.audio.newSound(Gdx.files.internal("hurt.ogg")),
-                new Texture(Gdx.files.internal("Rocket2.png")),
                 Gdx.audio.newSound(Gdx.files.internal("pop-sound.mp3")));
+
         nave.setVidas(vidas);
 
         balls = generarAsteroides();
@@ -52,36 +61,37 @@ public class PantallaJuego extends PantallaBase {
         gameMusic.setVolume(0.5f);
         gameMusic.play();
     }
+    private Texture obtenerTexturaNave(int ronda) {
+    int index = (ronda - 1) % texturasNave.length; // Cicla las texturas
+    return new Texture(Gdx.files.internal(texturasNave[index]));
+}
+
 
     private int calcularCantidadAsteroides(int ronda) {
         return 1 + (ronda - 1) * 2;
     }
 
-    private ArrayList<Ball2> generarAsteroides() {
+        private ArrayList<Ball2> generarAsteroides() {
         ArrayList<Ball2> asteroides = new ArrayList<>();
+        ObjetosEspacialesFactory factory = ObjetosEspacialesFactorySingleton.getInstance();
         Random r = new Random();
 
         for (int i = 0; i < cantAsteroides; i++) {
-            Ball2 asteroide = new Ball2(
-              r.nextInt((int) Gdx.graphics.getWidth()),
-              r.nextInt((int) Gdx.graphics.getHeight()),
-               20 + r.nextInt(10),
-               velXAsteroides + r.nextInt(4),
-              velYAsteroides + r.nextInt(4),
-              new Texture(Gdx.files.internal("aGreyMedium4.png"))
-            );
+            int x = r.nextInt(Gdx.graphics.getWidth());
+            int y = r.nextInt(Gdx.graphics.getHeight());
+            Texture texture = new Texture(Gdx.files.internal("aGreyMedium4.png"));
 
-            // Asignar diferentes estrategias de movimiento
+            // Alternar entre tipos de asteroides para asignar estrategias distintas
             if (i % 2 == 0) {
-                asteroide.setEstrategiaMovimiento(new MovimientoLineal());
+                asteroides.add(factory.createAsteroideGigante(x, y, texture)); // Movimiento Lineal
             } else {
-               asteroide.setEstrategiaMovimiento(new MovimientoZigzag());
+                asteroides.add(factory.createAsteroidePequeño(x, y, texture)); // Movimiento Zigzag
             }
-
-            asteroides.add(asteroide);
         }
+        
         return asteroides;
     }
+
 
 
     @Override
