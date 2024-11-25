@@ -12,6 +12,6 @@ public interface ObjetosEspacialesFactory {
     // Métodos específicos para diferentes tipos
     Ball2 createAsteroideGigante(int x, int y, Texture texture);
     Ball2 createAsteroidePequeño(int x, int y, Texture texture);
-    Nave4 createNaveLigera(int x, int y, Texture textureNave, Texture textureBala, Sound soundChoque, Sound soundBala);
-    Nave4 createNaveBlindada(int x, int y, Texture textureNave, Texture textureBala, Sound soundChoque, Sound soundBala);
+    Nave4 createNave1(int x, int y, Texture textureNave, Texture textureBala, Sound soundChoque, Sound soundBala);
+    Nave4 createNave2(int x, int y, Texture textureNave, Texture textureBala, Sound soundChoque, Sound soundBala);
 }

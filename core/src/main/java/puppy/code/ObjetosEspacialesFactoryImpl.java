@@ -36,7 +36,7 @@ public class ObjetosEspacialesFactoryImpl implements ObjetosEspacialesFactory {
     }
 
     @Override
-    public Nave4 createNaveLigera(int x, int y, Texture textureNave, Texture textureBala, Sound soundChoque, Sound soundBala) {
+    public Nave4 createNave1(int x, int y, Texture textureNave, Texture textureBala, Sound soundChoque, Sound soundBala) {
         Nave4 naveLigera = new Nave4(x, y, textureNave, soundChoque, textureBala, soundBala);
         naveLigera.setVel_x(4); // Más rápida
         naveLigera.setVel_y(4);
@@ -45,7 +45,7 @@ public class ObjetosEspacialesFactoryImpl implements ObjetosEspacialesFactory {
     }
 
     @Override
-    public Nave4 createNaveBlindada(int x, int y, Texture textureNave, Texture textureBala, Sound soundChoque, Sound soundBala) {
+    public Nave4 createNave2(int x, int y, Texture textureNave, Texture textureBala, Sound soundChoque, Sound soundBala) {
         Nave4 naveBlindada = new Nave4(x, y, textureNave, soundChoque, textureBala, soundBala);
         naveBlindada.setVidas(5); // Más resistente
         naveBlindada.setEstrategiaMovimiento(new MovimientoZigzag());
